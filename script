@@ -1,0 +1,199 @@
+install.packages("xtable")
+install.packages("ggplot2")
+install.packages("gridExtra")
+
+library(xtable)
+library(ggplot2)
+library(gridExtra)
+
+
+tabela_1 <- data.frame(
+  coluna1 = c("Idade", "Gênero", " ", " ", " ", " ", " ", "Orientação Sexual", " ", " ", " ", 
+              "Raça e Etnia", " ", " ", " ", " ", "Religião", " ", "ABEP (0-100)",
+              "Frequência em ir à praia", " ", " ", " ", " "),
+  
+  coluna2 = c("-","Mulher Cisgênero", "Mulher Transgênero", "Homem Cisgênero", "Homem Transgênero", "Pessoa Não-binária", "Outros", 
+              "Heterossexual", "Homossexual", "Bissexual/Panssexual", "Outros", "Parda", "Preta", "Amarela", "Branca", "Outras", "Sim", "Não", "-",
+              "Sempre", "Quase sempre", "Às vezes", "Raramente", "Nunca"),
+  
+  coluna3 = c("34.508 (12.81)", "214 (57.84)", "0", "136 (36.76)", "4 (1.08)", "9 (2.43)", "7 (1.9)", "265 (71.62)", "30 (8.11)", 
+              "66 (17.84)", "9 (2.43)", "117 (31.62)", "44 (11.9)", "2 (0.54)", "205 (55.495)", "2 (0.54)", "198 (53.5135)", "172 (46.4865)", "35.61 (9.515)",
+              "28 (7.6)", "90 (24.3)", "149 (40.3)", "96 (25.9)", "7 (1.9)")
+  )
+
+colnames(tabela_1) <- c("Variáveis","classificação","M(DP) ou n(%)")
+
+print(tabela_1)
+
+
+
+##GGPLOT
+
+p <- ggplot2::ggplot(data = tabela_1, aes(x = Coluna1, y = Coluna2)) +
+  geom_text(aes(label = Coluna3)) + 
+  theme_void()
+
+tabela_img_1 <- tableGrob(tabela_1, rows = NULL)
+tabela_img_1 <- gridExtra::tableGrob(tabela_1)
+
+ggsave("C:/Users/vitor/Downloads/tabela 1.png", plot = tabela_img_1, width = 6, height = 9)
+
+
+
+tabela_2 <- data.frame(
+
+  Coluna1 = c("Você fuma?", " ", " ", "Utiliza Protetor Solar na praia?", " ",
+              "Utiliza Canudos na Praia?", " ", " " , "Escala de Consumo por Status (1-7)", "Escala de Consumo Conspícuo (1-6)", " ", "Escala de Consumo Sustentável (1-5)", " ", " ", " ",
+              "Você acha que a utilização de canudos tem algum impacto para os animais?", " ", "Você acha que a utilização dos canudos tem algum impacto ambiental?", " ",
+              "Você acha que a utilização de protetor solar tem algum impacto aos animais?", " ", "Você acha que a utilização de cigarros tem algum impacto ambiental?", " ",
+              "Você acha que a utilização de cigarros tem algum impacto aos animais?", " ", "Você acha que a utilização de cigarros tem algum impacto ambiental?", " "),
+  
+  Coluna2 = c("Sim", "Não atualmente", "Nunca fumei",
+              "Sim", "Não", "Sim do Vendedor", "Sim, próprio", "Não utilizo", "-", "Estilo", "Custo", "Reciclagem", "Frugalidade", "Consciência Ecológica", "Economia de Recursos",
+              "Sim", "Não", "Sim", "Não", "Sim", "Não", "Sim", "Não", "Sim", "Não", "Sim", "Não"),
+  
+  Coluna3 = c("27 (7.3)", "49 (13.2)", "283 (76.5)",
+              "347 (93.8)", "23 (6.2)", "78 (21.1)", "19 (5.1)", "273 (73.8)", "2.237 (1.24)", "2.67 (1.21)", "2.046 (0.84)", "3.44 (1.407)", "4.04 (0.7)", "3.83 (0.9)", "4.07 (1.07)",
+              "346 (93.5)", "24 (6.5)", "356 (96.2)", "14 (3.8)", "181(48.9)", "163 (44.1)", "207 (55.9)", "163 (44.1)", "334 (90.3)", "36 (9.7)", "357 (96.9)", "13 (3.5)")
+  
+  )
+
+colnames(tabela_2) <- c("Variáveis","classificação","M(DP) ou n(%)")
+
+print(tabela_2)
+
+
+##GGPLOT
+
+p <- ggplot2::ggplot(data = tabela_2, aes(x = Coluna1, y = Coluna2)) +
+  geom_text(aes(label = Coluna3)) + 
+  theme_void()
+
+tabela_img_2 <- tableGrob(tabela_2, rows = NULL)
+tabela_img_2 <- gridExtra::tableGrob(tabela_2)
+
+ggsave("C:/Users/vitor/Downloads/tabela 2.png", plot = tabela_img_2, width = 10, height = 9)
+
+
+## GRAFICO DE BARRA
+
+## tabela 1
+
+ggplot(tabela_1, aes(x = coluna1, y = coluna3, fill = coluna2)) +
+  geom_bar(stat = "identity", position = "dodge") +  # "dodge" coloca as barras lado a lado
+  theme_minimal() +
+  labs(title = "Gráfico de Barras Lado a Lado", 
+       x = "Variáveis", 
+       y = "M(DP) ou n(%)", 
+       fill = "Classificação")
+
+## muito complexo, tenho pouco tempo
+
+
+
+## TABELA 3
+
+tabela_3 <- data.frame(
+  
+  Coluna1 = c("ECS", " ", "ECC (Estilo)", " ", "ECC (Custo)", " ", "ECSust \n (Reciclagem)", " ", "ECSust \n (Frugalidade)", " ", "ECSust \n (Consciência Ecológica)", " ", "ECSust \n (Economia de Recursos)", " "),
+  
+  Coluna2 = c("ρ", "p", "ρ", "p", "ρ", "p", "ρ", "p", "ρ", "p", "ρ", "p", "ρ", "p"),
+  
+  Coluna3 = c("-", "-", "0.40***", "< .001", "0.46***", "< .001", "-0.20***", "< .001", "-0.154**", "0.003", "-0.1705***", "< .001", "-0.159**", "0.002"),
+  
+  coluna4 = c(" ", " ", "-", "-", "0.63***", "< .001", "-0.02", "0.70", "0.06", "0.253", "0.034", "0.50", "-0.136*", "0.009"),
+  
+  coluna5 = c(" ", " ", " ", " ", "-", "-", "-0.066", "0.205", "-0.103*", "0.047", "0.002", "0.97", "-0.127*", "0.015"),
+  
+  Coluna6 = c(" ", " ", " ", " ", " ", " ", "-", "-", "0.342***", "< .001", "0.43***", "< .001", "0.116*", "0.026"),
+  
+  coluna7 = c(" ", " ", " ", " ", " ", " ", " ", " ", "-", "-", "0.428***", "< .001", "0.193***", "< .001"),
+  
+  coluna8 = c(" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "-", "-", "0.198**", "< .001"),
+  
+  coluna9 = c(" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "-", "-")
+  
+)
+
+colnames(tabela_3) <- c(" "," ","ECS", "ECC (Estilo", "ECC (Custo)", "ECSust \n (Reciclagem)", "ECSust \n (Frugalidade)", "ECSust \n (Consciência Ecológica)", "ECSust \n (Economia de Recursos)")
+
+print(tabela_3)
+
+
+##GGPLOT
+
+p <- ggplot2::ggplot(data = tabela_3, aes(x = Coluna1, y = Coluna2)) +
+  geom_text(aes(label = Coluna3)) + 
+  theme_void()
+
+tabela_img_3 <- tableGrob(tabela_3, rows = NULL)
+tabela_img_3 <- gridExtra::tableGrob(tabela_3)
+
+ggsave("C:/Users/vitor/Downloads/tabela 3.png", plot = tabela_img_3, width = 16, height = 7)
+
+
+
+## TABELA 4
+
+tabela_4 <- data.frame(
+  
+  coluna1 = c("N", "ECS", " ", " ", " ", "ECC (Estilo)", " ", " ", " ", "ECC (Custo)", " ", " ", " ", "ECSust \n (Reciclagem)", " ", " ", " ", "ECSust \n (Frugalidade)", " ", " ", " ", "ECSust \n (Consciência Ecológica)", " ", " ", " ", "ECSust \n (Economia de Recursos)", " ", " ", " "),
+  
+  coluna2 = c(" ", "M", "DP", "W", "p", "M", "DP", "W", "p", "M", "DP", "W", "p", "M", "DP", "W", "p", "M", "DP", "W", "p", "M", "DP", "W", "p", "M", "DP", "W", "p"),
+  
+  coluna3 = c("78", "2.38", "1.31", "11571.50", "0.24", "2.88", "1.24", "12014.0", "0.82", "2.15", "0.88", "11593.0", "0.229", "3.22", "1.37", "9608.50", "0.185", "3.996", "0.095", "10588.0", "0.610", "3.65", "0.954", "9099.0", "0.048*", "3.825", "0.935", "8540.0", "0.004*"),
+  
+  coluna4 = c("273", "2.175", "1.21", " ", " ", "2.61", "1.21", " "," ", "2.02", "0.83"," "," ","3.44", "1.42", " ", " ", "3.99", "0.04", " "," ", "3.88", "0.85", " ", " ", "4.15", "0.86", " ", " "),
+
+  coluna5 = c("109", "2.14", "1.23", "6394.5", "0.94", "2.77", "1.14", "7019.5", "0.60", "2.03", "0.85", "6622.5", "0.21", "3.73", "1.34", "7640.5", "0.53", "4.18", "0.66", "8612.0", "0.01*", "4.11", "3.87", "8612.5", "0.01*", "4.242", "0.818", "8113.5", "0.13"),
+  
+  coluna6 = c("134", "2.37", "1.21", " ", " ", "2.86", "1.26", " ", " ", "2.16", "0.83", " ", " ", "3.66", "1.32", " ", " ", "3.99", "0.66", " ", " ", "3.87", "0.81", " ", " ", "4.01", "0.84", " ", " "),
+  
+  coluna7 = c("76", "2.17", "1,11", "11101.0", "0.93", "2.93", "1.27", "12799.0", "0.05*", "2.00", "0.75", "11101.0", "0.85", "3.52", "1.42", "11629.5", "0.58", "4.10", "0.67", "12085.5", "0.27", "4.00", "0.88", "12743.0", "0.057", "4.031", "0.83", "10170.0", "0.22"),
+  
+  coluna8 = c("294", "2.25", "1.27", " ", " ", "2.60", "1.19", " ", " ", "2.06", "0.86", " ", " ", "3.42", "1.40", " ", " ", "3.97", "0.78", " ", " ", "3.78", "0.89", " ", " ", "4.12", "0.90", " ", " "),
+  
+  coluna9 = c("346", "2.225", "1.22", "3941.0", "0.67", "2.68", "1.21", "4445.0", "0.17", "2.056", "0.83", "4842.0", "0.17", "3.48", "1.39", "5228.5", "0.03*", "4.04", "0.72", "5886.0", "< .001***", "3.87", "0.86", "5680.5", "0.002**", "4.11", "0.88", "4378.0", "0.65"),
+  
+  coluna10 = c("24", "2.40", "1.48", " ", " ", "2.51", "1.125", " ", " ", "1.90", "1.026", " ", " ", "2.8", "1.54", " ", " ", "3.33", "1.06", " ", " ", "3.18", "1.1", " ", " ", "3.95", "1.04", " ", " "),
+  
+  coluna11 = c("356", "2.25", "1.25", "2742.5", "0.52", "2.67", "1.21", "2572.5", "0.83", "2.05", "846", "2690.5", "0.612", "3.48", "1.39", "3666.0", "0.0025**", "4.03", "0.72", "3582.5", "0.005**", "3.85", "0.87", "3579.0", "0.005**", "4.10", "0.88", "2503.0", "0.978"),
+  
+  coluna12 = c("14", "1.91", "0.87", " ", " ", "2.59", "1.11", " ", " ", "1.89", "0.68", " ", " ", "2.25", "1.39", " ", " ", "3.14", "1.25", " ", " ", "3.07", "1.04", " ", " ", "4.05", "1.02", " ", " "),
+  
+  coluna13 = c("181", "2.125", "1.16", "15430.0", "0.10", "4.05", "0.78", "17481.0", "0.71", "2.04", "0.86", "16849.0", "0.80", "3.69", "1.37", "20749.5", "< .001***", "4.13", "0.65", "19927.0", "0.006*", "4.05", "0.78", "21719.0", "< .001***", "4.22", "0.77", "19111.0", "0.047*"),
+  
+  coluna14 = c("189", "2.34", "1.30", " ", " ", "3.615", "0.95", " ", " ", "2.05", "0.812", " ", " ", "3.19", "1.39", " ", " ", "3.87", "0.84", " ", " ", "3.61", "0.95", " ", " ", "3.98", "0.97", " ", " "),
+  
+  coluna15 = c("207", "2.18", "1.199", "16042.0", "0.41", "2.71", "1.21", "17684.0", "0.424", "2.015", "0.82", "16227.0", "0.53", "3.68", "1.34", "20600.5", "< .001***", "4.121", "0.64", "19606.5", "0.007*", "4.02", "0.77", "21186.0", "< .001***", "4.18", "0.81", "18335.5", "0.14"),
+  
+  coluna16 = c("163", "2.30", "1.29", " ", " ", "2.62", "1.21", " ", " ", "2.086", "0.86", " ", " ", "3.12", "1.43", " ", " ", "3.84", "0.87", " ", " ", "3.58", "0.98", " ", " ", "4.00", "0.97", " ", " "),
+  
+  coluna17 = c("334", "2.25", "1,25", "6135.0", "0.84", "2.66", "1.22", "5610.0", "0.51", "2.04", "0.85", "5715.5", "0.625", "3.49", "1.38", "7384.5", "0.023*", "4.03", "0.74", "7287.0", "0.0035**", "3.85", "0.88", "6876.0", "0.15", "4.12", "0.87", "6650.5", "0.29"),
+  
+  coluna18 = c("36", "2.14", "1.12", " ", " ", "2.77", "1.15", " ", " ", "2.08", "0.77", " ", " ", "2.9", "1.49", " ", " ", "3.70", "0.91", " ", " ", "3.61", "1.01", " ", " ", "3.93", "1.01", " ", " "),
+  
+  coluna19 = c("357", "2.25", "1.24", "2770.0", "0.23", "2.67", "1.2", "2501.0", "0.633", "2.05", "0.85", "2502.5", "0.63", "3.46", "1.41", "3047.5", "0.05", "4.00", "0.75", "2357.5", "0.92", "3.83", "0.90", "2712.0", "0.30", "4.10", "0.88", "2289.5", "0.93"),
+  
+  coluna20 = c("13", "1.83", "1.076", " ", " ", "2.5", "1.26", " ", " ", "2.05", "0.67", " ", " ", "2.79", "1.05", " ", " ", "3.85", "1.06", " ", " ", "3.64", "0.76", " ", " ", "4.05", "1.08", " ", " ")
+  
+  )
+
+colnames(tabela_4) <- c(" ", " ", "Usa canudo \n em estabelecimentos", "Não usa canudo \n em estabelecimentos", "Lê rótulo de PS", "Não lê rótulo de PS", "Fuma/ já fumou", "Não fuma", "Sim", "Não",
+                        "Sim", "Não", "Sim", "Não", "Sim", "Não",
+                        "Sim", "Não")
+
+print(tabela_4)
+
+
+##GGPLOT
+
+p <- ggplot2::ggplot(data = tabela_4, aes(x = coluna1, y = coluna2)) +
+  geom_text(aes(label = coluna3)) + 
+  theme_void()
+
+tabela_img_4 <- tableGrob(tabela_4, rows = NULL)
+tabela_img_4 <- gridExtra::tableGrob(tabela_4)
+
+ggsave("C:/Users/vitor/Downloads/tabela 4.png", plot = tabela_img_4, width = 23, height = 12)
+
